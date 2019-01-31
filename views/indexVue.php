@@ -34,9 +34,10 @@ if (!isset($_SESSION['nocookies'])) {
 
 <div class="col-12 d-block mx-auto m-0 p-0 searchnav" style="position: absolute; top: 20%;">
   <h1 class="col-8 mx-auto pl-2 pl-md-3 pl-lg-4 font-weight-bold" style="font-size: 25px;">Trouvez votre maison</h1>
-  <form class="col-8 mx-auto p-0 m-0 mb-3 center mt-2 text-center" action="index.php" method="get">
-      <input placeholder='Recherche par Départements' type="search" class="col-7 col-lg-8" name="terme" id="tags">
-      <button class="mr-2 btn btn-info col-3" type="submit" name="s"><i class="fas fa-search"></i></button>
+  <form class="col-8 mx-auto p-0 m-0 mb-3 center mt-2 text-center" action="moreHouse.php" method="get">
+      <input type="hidden" name="page" value="1">
+      <input placeholder='Recherche par Départements' type="search" class="col-7 col-lg-8" name="departments" id="tags">
+      <button class="mr-2 btn btn-info col-3" type="submit"><i class="fas fa-search"></i></button>
   </form>
 </div>
 
@@ -94,7 +95,7 @@ if (!isset($_SESSION['nocookies'])) {
     
     </div>
     <div class="col-12 text-center m-0 p-0 mt-4">
-      <a class="btn orangebg text-white pl-5 pr-5 pt-3 pb-3 mx-auto font-weight-bold" style="font-size: 15px;" href="">Tout voir</a>
+      <a class="btn orangebg text-white pl-5 pr-5 pt-3 pb-3 mx-auto font-weight-bold" style="font-size: 15px;" href="moreHouse.php?page=1">Tout voir</a>
     </div>
   </div>
 
@@ -105,7 +106,7 @@ if (!isset($_SESSION['nocookies'])) {
 
   <div class="col-12 m-0 p-0" style="overflow-x: hidden; overflow-y: hidden">
     <div class="row col-12 m-0 p-0 mt-5" data-aos="fade-right" data-aos-duration="1500">
-      <a href="#" style="height: 300px;" class="mx-auto col-11 col-md-5 col-lg-3 m-0 p-0 cardhover">
+      <a href="moreHouse.php?page=1&departments=Pas-de-Calais" style="height: 300px;" class="mx-auto col-11 col-md-5 col-lg-3 m-0 p-0 cardhover">
         <div style="opacity: 0.6; height: 300px; background-repeat: round; background-image: url('../assets/img/pas-de-calais.png')">
         </div>
         <div style="top: -85px; position: relative;">
@@ -113,7 +114,7 @@ if (!isset($_SESSION['nocookies'])) {
             <h4 class="colororange font-weight-bold text-center">128 Biens</h4>
         </div>
       </a>
-      <a href="#" style="height: 300px;" class="mx-auto col-11 col-md-5 col-lg-8 m-0 p-0 mt-5 mt-md-0 cardhover">
+      <a href="moreHouse.php?page=1&departments=Nord" style="height: 300px;" class="mx-auto col-11 col-md-5 col-lg-8 m-0 p-0 mt-5 mt-md-0 cardhover">
         <div style="opacity: 0.6; width: 100% !important; height: 300px; background-repeat: round; background-image: url('../assets/img/lille.png')">
         </div>
         <div style="top: -85px; position: relative;">
@@ -126,7 +127,7 @@ if (!isset($_SESSION['nocookies'])) {
 
   <div class="col-12 m-0 p-0" style="overflow-x: hidden; overflow-y: hidden">
     <div class="row col-12 m-0 p-0 mt-5" data-aos="fade-left" data-aos-duration="1500">
-      <a href="#" style="height: 300px;" class="mx-auto col-11 col-md-5 col-lg-8 m-0 p-0 cardhover">
+      <a href="moreHouse.php?page=1&departments=Rhône" style="height: 300px;" class="mx-auto col-11 col-md-5 col-lg-8 m-0 p-0 cardhover">
         <div style="opacity: 0.6; width: 100% !important; height: 300px; background-repeat: round; background-image: url('../assets/img/lyon.png')">
         </div>
         <div style="top: -85px; position: relative;">
@@ -134,7 +135,7 @@ if (!isset($_SESSION['nocookies'])) {
             <h4 class="colororange font-weight-bold text-center">852 Biens</h4>
         </div>
       </a>
-      <a href="#" style="height: 300px;" class="mx-auto col-11 col-md-5 col-lg-3 m-0 p-0 mt-5 mt-md-0 cardhover">
+      <a href="moreHouse.php?page=1&departments=Paris" style="height: 300px;" class="mx-auto col-11 col-md-5 col-lg-3 m-0 p-0 mt-5 mt-md-0 cardhover">
         <div style="opacity: 0.6; height: 300px; background-repeat: round; background-image: url('../assets/img/paris.png')">
         </div>
         <div style="top: -85px; position: relative;">
@@ -161,7 +162,7 @@ if (!isset($_SESSION['nocookies'])) {
         $("#tags").autocomplete({
             source: availableTags,
             minLength:2
-        }); 
+        });
       });
 </script>
 
