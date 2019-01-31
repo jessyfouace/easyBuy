@@ -75,6 +75,35 @@ class HouseManager
         return $arrayOfAll;
     }
 
+    public function countHouse()
+    {
+        $query = $this->getBdd()->prepare('SELECT COUNT(*) FROM house');
+        $query->execute();
+        $allCount = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($allCount as $count) {
+            return $count;
+        }
+
+    }
+
+    public function paginationHouse($firstEntry, $messagePearPage)
+    {
+        $firstEntry = (int) $firstEntry;
+        $messagePearPage = (int) $messagePearPage;
+        $query = $this->getBdd()->prepare('SELECT * FROM house ORDER BY idAppartments DESC LIMIT :firstEntry, :messagePearPage');
+        $query->bindValue('firstEntry', $firstEntry, PDO::PARAM_INT);
+        $query->bindValue('messagePearPage', $messagePearPage, PDO::PARAM_INT);
+        $query->execute();
+        $selectHouses = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        $arrayOfHouse = [];
+        foreach ($selectHouses as $house) {
+            $arrayOfHouse[] = new House($house);
+        }
+        return $arrayOfHouse;
+    }
+
 
     /**
      * Get the value of _bdd
