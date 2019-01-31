@@ -87,23 +87,63 @@ class HouseManager
 
     }
 
+    public function countHouseByDepartments($departmentsId)
+    {
+        $query = $this->getBdd()->prepare('SELECT COUNT(*) FROM house WHERE departmentsId = :departmentsId');
+        $query->bindValue('departmentsId', $departmentsId, PDO::PARAM_INT);
+        $query->execute();
+        $allCount = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($allCount as $count) {
+            return $count;
+        }
+    }
+
     public function paginationHouse($firstEntry, $messagePearPage)
     {
         $firstEntry = (int) $firstEntry;
         $messagePearPage = (int) $messagePearPage;
-        $query = $this->getBdd()->prepare('SELECT * FROM house ORDER BY idAppartments DESC LIMIT :firstEntry, :messagePearPage');
+        $query = $this->getBdd()->prepare('SELECT * FROM house LEFT JOIN images ON house.imagesId = images.idImages GROUP BY house.idAppartments DESC LIMIT :firstEntry, :messagePearPage');
         $query->bindValue('firstEntry', $firstEntry, PDO::PARAM_INT);
         $query->bindValue('messagePearPage', $messagePearPage, PDO::PARAM_INT);
         $query->execute();
         $selectHouses = $query->fetchAll(PDO::FETCH_ASSOC);
 
         $arrayOfHouse = [];
+        $arrayOfImages = [];
+        $arrayOfAll = [];
         foreach ($selectHouses as $house) {
             $arrayOfHouse[] = new House($house);
+            $arrayOfImages[] = new Images($house);
         }
-        return $arrayOfHouse;
+        $arrayOfAll[] = $arrayOfHouse;
+        $arrayOfAll[] = $arrayOfImages;
+        return $arrayOfAll;
     }
 
+        public function paginationHouseDepartments($firstEntry, $messagePearPage, $departments)
+    {
+        $firstEntry = (int)$firstEntry;
+        $messagePearPage = (int)$messagePearPage;
+
+        $query = $this->getBdd()->prepare('SELECT * FROM house LEFT JOIN images ON house.imagesId = images.idImages WHERE house.departmentsId = :departments GROUP BY house.idAppartments DESC LIMIT :firstEntry, :messagePearPage');
+        $query->bindValue('firstEntry', $firstEntry, PDO::PARAM_INT);
+        $query->bindValue('messagePearPage', $messagePearPage, PDO::PARAM_INT);
+        $query->bindValue('departments', $departments, PDO::PARAM_INT);
+        $query->execute();
+        $selectHouses = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        $arrayOfHouse = [];
+        $arrayOfImages = [];
+        $arrayOfAll = [];
+        foreach ($selectHouses as $house) {
+            $arrayOfHouse[] = new House($house);
+            $arrayOfImages[] = new Images($house);
+        }
+        $arrayOfAll[] = $arrayOfHouse;
+        $arrayOfAll[] = $arrayOfImages;
+        return $arrayOfAll;
+    }
 
     /**
      * Get the value of _bdd

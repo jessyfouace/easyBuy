@@ -44,7 +44,7 @@
           </li>
           <?php } ?>
           <li class="nav-item <?php if ($isActive == 3) { ?> active <?php } ?>">
-            <a class="nav-link" href="addHouse.php"><i class="fas fa-hotel"></i> Tous les biens</a>
+            <a class="nav-link" href="moreHouse.php?page=1"><i class="fas fa-hotel"></i> Tous les biens</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#footer"><i class="fas fa-envelope"></i> Contact</a>

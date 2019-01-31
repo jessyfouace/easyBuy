@@ -22,7 +22,44 @@ $departments = new DepartmentsManager($db);
 $houseManager = new HouseManager($db);
 $usersManager = new UsersManager($db);
 
-$allCount = $houseManager->countHouse();
+$allDepartments = $departments->getDepartments();
+
+
+if (!isset($_GET['page'])) {
+    header('location: moreHouse.php?page=1');
+}
+
+$arrayOfDepartments = [];
+foreach ($allDepartments as $oneDepartment) {
+    $arrayOfDepartments[] = $oneDepartment->getId();
+}
+
+$arrayOfDepartmentsName = [];
+foreach ($allDepartments as $oneDepartment) {
+    $arrayOfDepartmentsName[$oneDepartment->getId()] = $oneDepartment->getDepartmentsName();
+}
+
+if (!isset($_GET['departments'])) {
+    $allCount = $houseManager->countHouse();
+} else {
+    $departmentsName = $_GET['departments'];
+    if (is_string($_GET['departments'])) {
+        if (in_array($_GET['departments'], $arrayOfDepartmentsName)) {
+            foreach ($arrayOfDepartmentsName as $key => $name) {
+                if ($name == $_GET['departments']) {
+                    $departmentsName = (int)$key;
+                    break;
+                }
+            }
+        } else {
+            $errorMessage = 'Aucun bien n\'as étais trouver sur votre recherche';
+            $allCount = $houseManager->countHouse();
+        }
+        $allCount = $houseManager->countHouseByDepartments($departmentsName);
+    } else {
+        $allCount = $houseManager->countHouse();
+    }
+}
 foreach ($allCount as $count) {
     $allCount = $count;
 }
@@ -42,8 +79,33 @@ if (isset($_GET['page'])) {
 }
 
 $firstEntry = ($actualPage - 1) * $messagePearPage;
-
-$returnMessage = $houseManager->paginationHouse($firstEntry, $messagePearPage);
+$errorMessage = '';
+if (!isset($_GET['departments'])) {
+    $returnMessage = $houseManager->paginationHouse($firstEntry, $messagePearPage);
+} else {
+    if (is_string($_GET['departments'])) {
+        if (in_array($_GET['departments'], $arrayOfDepartmentsName)) {
+            foreach ($arrayOfDepartmentsName as $key => $name) {
+                if ($name == $_GET['departments']) {
+                    $departmentsName = (int) $key;
+                    break;
+                }
+            }
+        } else {
+            $errorMessage = 'Aucun bien n\'as étais trouver sur votre recherche';
+            $returnMessage = $houseManager->paginationHouse($firstEntry, $messagePearPage);
+        }
+    }
+    if (in_array($departmentsName, $arrayOfDepartments)) {
+        $returnMessage = $houseManager->paginationHouseDepartments($firstEntry, $messagePearPage, $departmentsName);
+        if (empty($returnMessage[0])) {
+            $errorMessage = 'Aucun bien n\'as étais trouver sur votre recherche';
+        }
+    } else {
+        $errorMessage = 'Aucun bien n\'as étais trouver sur votre recherche';
+        $returnMessage = $houseManager->paginationHouse($firstEntry, $messagePearPage);
+    }
+}
 
 require '../controllers/cookies.php';
 
