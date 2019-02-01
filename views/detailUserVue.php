@@ -106,46 +106,46 @@ include("template/header.php"); ?>
                     <div class="tab-pane" id="edit">
                         <form role="form" method="post">
                             <?php foreach ($infoUser[0] as $user) { ?>
-                            <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label">Prénom</label>
-                                <div class="col-lg-9">
+                            <div class="form-group">
+                                <label class="col-form-label form-control-label">Prénom</label>
+                                <div class="col-12 m-0 p-0">
                                     <input class="form-control" type="text" name="firstname" value="<?= $user->getFirstname() ?>">
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label">Nom</label>
-                                <div class="col-lg-9">
+                            <div class="form-group">
+                                <label class="col-form-label form-control-label">Nom</label>
+                                <div class="col-12 m-0 p-0">
                                     <input class="form-control" type="text" name="lastname" value="<?= $user->getLastname() ?>">
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label">Email</label>
-                                <div class="col-lg-9">
+                            <div class="form-group">
+                                <label class="col-form-label form-control-label">Email</label>
+                                <div class="col-12 m-0 p-0">
                                     <input class="form-control" type="email" name="mail" value="<?= $user->getMail() ?>">
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label">Ancien mot de passe</label>
-                                <div class="col-lg-9">
+                            <div class="form-group">
+                                <label class="col-form-label form-control-label">Ancien mot de passe</label>
+                                <div class="col-12 m-0 p-0">
                                     <input class="form-control" type="password" name="lastpassword" value="">
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label">Nouveau mot de passe</label>
-                                <div class="col-lg-9">
+                            <div class="form-group">
+                                <label class="col-form-label form-control-label">Nouveau mot de passe</label>
+                                <div class="col-12 m-0 p-0">
                                     <input class="form-control" type="password" name="newpassword" value="">
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label">Confirmation mot de passe</label>
-                                <div class="col-lg-9">
+                            <div class="form-group">
+                                <label class="col-form-label form-control-label">Confirmation mot de passe</label>
+                                <div class="col-12 m-0 p-0">
                                     <input class="form-control" type="password" name="confirmnewpassword" value="">
                                 </div>
                             </div>
                             <?php } ?>
-                            <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label"></label>
-                                <div class="col-lg-9">
+                            <div class="form-group">
+                                <label class="col-form-label form-control-label"></label>
+                                <div class="col-12 text-center">
                                     <input type="reset" class="btn btn-secondary" value="Annuler">
                                     <input type="submit" class="btn btn-primary" name="edit" value="Sauvegarder">
                                 </div>
