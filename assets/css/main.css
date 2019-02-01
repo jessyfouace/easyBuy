@@ -116,6 +116,10 @@ textarea {
     .responsiveimg{
         height: 50vh !important;   
     }
+    .pagination>li>a, .pagination>li>span {
+        /* border-radius: 50% !important;margin: 0 5px; */
+        font-size: 14px;
+    }
 }
 
 /* ##################################################################### */
@@ -125,6 +129,10 @@ textarea {
 @media (min-width: 769px) {
     .searchnav{
         top: 32% !important;
+    }
+    .pagination>li>a, .pagination>li>span {
+        border-radius: 50% !important;margin: 0 5px;
+        font-size: 20px;
     }
 }
 

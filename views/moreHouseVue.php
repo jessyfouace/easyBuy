@@ -13,7 +13,7 @@ if (!isset($_SESSION['nocookies'])) {
     </div>
     <div class="col-lg-10 row mx-auto pt-4 mt-4">
         <div class="col-12 col-lg-2 col-lg-3 pb-5">
-            <form class="bg-white w-100 pt-2 pl-2 pr-2" action="" method="get">
+            <form class="bg-white w-100 p-2" action="" method="get">
                 <h1 class="text-center">Trier</h1>
                 <p class="pb-0">Département:</p>
                 <input type="hidden" name="page" value="1">
@@ -76,29 +76,73 @@ if (!isset($_SESSION['nocookies'])) {
     <?php } ?>
         </div>
     </div>
-    <div class="text-center mb-0 pb-0">
+    <div class="mt-2 pb-4 mb-0">
+        <nav class="mb-0 pb-0" aria-label="Page navigation example">
+          <ul class="justify-content-center pagination mb-0 pb-0">
+        <?php if ($_GET['page'] > 1) { 
+            $getPage = (int) $_GET['page'] - 1;        
+            ?>
+            <li class="page-item"><a class="page-link" href='moreHouse.php?page=1'><i class="text-black fas fa-angle-double-left"></i></a></li>
+            <li class="page-item"><a class="page-link" href='moreHouse.php?page=<?= $getPage ?>'><i class="text-black fas fa-angle-left"></i></a></li>
+        <?php } ?>
+
         <?php
-        if ($numberOfPage > 1) {
-            echo '<p class="m-0">';
-            $page = (int) $_GET['page'];
-            $prev_Page = $page - 1;
-            $next_Page = $page + 1;
-            if ($prev_Page) {
-                echo "&nbsp;<a href='moreHouse.php?page=$prev_Page'><i class='text-primary sizeh2 fas fa-chevron-circle-left'></i></a>&nbsp; ";
+            $max = 3;
+            if ($_GET['page'] < $max) {
+                $sp = 1;
+            } elseif ($_GET['page'] >= ($numberOfPage - floor($max / 2))) {
+                $sp = $numberOfPage - $max + 1;
+            } elseif ($_GET['page'] >= $max) {
+                $sp = $_GET['page'] - floor($max / 2);
             }
-            for ($i = 1; $i <= $numberOfPage; $i++) {
-                if ($i != $page) {
-                    echo "&nbsp;<a class='sizeh2' href='moreHouse.php?page=$i'>$i</a>&nbsp; ";
-                } else {
-                    echo "&nbsp;<span class='sizeh2 colororange font-weight-bold'>$i</span>&nbsp; ";
-                }
-            }
-            if ($page != $numberOfPage) {
-                echo "&nbsp;<a href='moreHouse?page=$next_Page'><i class='text-primary sizeh2 fas fa-chevron-circle-right'></i></a>&nbsp;";
-            }
-            echo '</p>';
-        }
         ?>
+
+        <?php if ($_GET['page'] >= $max) { ?>
+
+            <li class="page-item"><a href='moreHouse?page=1' class="page-link text-black font-weight-bold">1</a></li>
+            <span class="p-2">...</span>
+
+        <?php } ?>
+
+        <?php for ($i = $sp; $i <= ($sp + $max - 1); $i++) { ?>
+
+            <?php
+            if ($i > $numberOfPage) {
+                continue;
+            }
+            ?>
+
+            <?php if ($_GET['page'] == $i) { ?>
+
+                <li class="page-item active"><span class='page-link font-weight-bold'><?php echo $i; ?></span></li>
+
+            <?php } else { ?>
+                    
+                    <?php if ($i < $numberOfPage + 1) : ?>
+                <li class="page-item"><a class="page-link text-black font-weight-bold" href='moreHouse.php?page=<?= $i ?>'><?php echo $i; ?></a></li>
+                    <?php endif; ?>
+
+            <?php } ?>
+
+        <?php } ?>
+
+        <?php if ($_GET['page'] < ($numberOfPage - floor($max / 2))) { ?>
+
+            <span class="p-2">...</span>
+            <li class="page-item"><a class="page-link text-black font-weight-bold" href='moreHouse.php?page=<?= $numberOfPage ?>'><?php echo $numberOfPage; ?></a></li>
+
+        <?php } ?>
+
+        <?php if ($_GET['page'] < $numberOfPage) {
+            $getPage = (int) $_GET['page'] + 1;
+            ?>
+            <li class="page-item"><a class="page-link" href='<?php echo 'moreHouse.php?page=' . $getPage; ?>'><i class="text-black fas fa-angle-right"></i></a></li>
+
+            <li class="page-item"><a class="page-link" href='<?php echo 'moreHouse.php?page=' . $numberOfPage; ?>'><i class="text-black fas fa-angle-double-right"></i></a></li>
+
+        <?php } ?>
+            </ul>
+        </nav>
     </div>
 </div>
 

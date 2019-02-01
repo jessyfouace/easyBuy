@@ -22,9 +22,10 @@ $usersManager = new UsersManager($db);
 
 require('../controllers/connexion.php');
 
+require('../controllers/cookies.php');
+
 if (isset($_SESSION['mail'])) {
     header('location: index.php');
 }
-require('../controllers/cookies.php');
 
 require('../views/loginVue.php');
