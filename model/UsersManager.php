@@ -10,13 +10,24 @@ class UsersManager
 
     public function getUserById($idUser)
     {
-        $query = $this->getBdd()->prepare('SELECT * FROM users WHERE idUser = :idUser');
+        $query = $this->getBdd()->prepare('SELECT * FROM users LEFT JOIN house ON users.idUser = house.userId WHERE users.idUser = :idUser GROUP BY house.idAppartments DESC LIMIT 5');
+        $query->bindValue('idUser', $idUser, PDO::PARAM_INT);
         $query->execute();
         $infosUser = $query->fetchAll(PDO::FETCH_ASSOC);
 
+        $arrayOfHouse = [];
+        $arrayOfUsers = [];
+        $arrayOfAll = [];
         foreach ($infosUser as $infoUser) {
-            return new Users($infoUser);
+            if (empty($arrayOfUsers)) {
+                $arrayOfUsers[] = new Users($infoUser);
+            }
+            $arrayOfHouse[] = new House($infoUser);
         }
+        $arrayOfAll[] = $arrayOfUsers;
+        $arrayOfAll[] = $arrayOfHouse;
+
+        return $arrayOfAll;
     }
 
     public function getUserByMail(string $mail)
@@ -42,6 +53,29 @@ class UsersManager
         $query->execute();
     }
 
+    public function updateUserPassword(Users $user)
+    {
+        $query = $this->getBdd()->prepare('UPDATE users SET mail = :mail, firstname = :firstname, lastname = :lastname, password = :password, role = :role WHERE idUser = :idUser');
+        $query->bindValue('mail', $user->getMail(), PDO::PARAM_STR);
+        $query->bindValue('firstname', $user->getFirstname(), PDO::PARAM_STR);
+        $query->bindValue('lastname', $user->getLastname(), PDO::PARAM_STR);
+        $query->bindValue('password', $user->getPassword(), PDO::PARAM_STR);
+        $query->bindValue('role', $user->getRole(), PDO::PARAM_STR);
+        $query->bindValue('idUser', $user->getIdUser(), PDO::PARAM_STR);
+        $query->execute();
+    }
+
+    public function updateUser(Users $user)
+    {
+        $query = $this->getBdd()->prepare('UPDATE users SET mail = :mail, firstname = :firstname, lastname = :lastname, password = :password, role = :role WHERE idUser = :idUser');
+        $query->bindValue('mail', $user->getMail(), PDO::PARAM_STR);
+        $query->bindValue('firstname', $user->getFirstname(), PDO::PARAM_STR);
+        $query->bindValue('lastname', $user->getLastname(), PDO::PARAM_STR);
+        $query->bindValue('password', $user->getPassword(), PDO::PARAM_STR);
+        $query->bindValue('role', $user->getRole(), PDO::PARAM_STR);
+        $query->bindValue('idUser', $user->getIdUser(), PDO::PARAM_STR);
+        $query->execute();
+    }
 
     /**
      * Get the value of _bdd

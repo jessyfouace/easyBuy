@@ -93,7 +93,7 @@ if (!isset($_SESSION['nocookies'])) {
             <div class="card">
                 <article class="card-body">
                     <?php foreach ($houseByToken[3] as $user) { ?>
-                    <h4 class="card-title text-center mb-4 mt-1">Contacter <?= $user->getFirstname() . ' ' . $user->getLastname() ?></h4>
+                    <h4 class="card-title text-center mb-4 mt-1">Contacter <a href="detailUser.php?idUserProfil=<?= $user->getIdUser() ?>"><?= $user->getFirstname() . ' ' . $user->getLastname() ?></a></h4>
                     <?php } ?>
                     <hr>
                     <?php if(!isset($_SESSION['mail'])){
