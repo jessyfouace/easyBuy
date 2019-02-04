@@ -62,9 +62,9 @@
               <i class="fas fa-user"></i>  Profil
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" href="#">Profil</a>
-                <a class="dropdown-item" href="#">Mes biens</a>
-                <a class="dropdown-item" href="#">Messages</a>
+                <a class="dropdown-item" href="detailUser.php?idUserProfil=<?= $_SESSION['idUser'] ?>">Profil</a>
+                <a class="dropdown-item" href="detailUser.php?idUserProfil=<?= $_SESSION['idUser'] ?>">Messages</a>
+                <a class="dropdown-item" href="detailUser.php?idUserProfil=<?= $_SESSION['idUser'] ?>">Mes biens</a>
               </div>
             </li>
             <li class="nav-item">

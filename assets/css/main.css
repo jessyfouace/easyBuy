@@ -349,6 +349,10 @@ a:hover{
     border: none;
 }
 
+.nohover:hover{
+    background-color: white;
+}
+
 
 body{
     font-family: Arial, Helvetica, sans-serif; 

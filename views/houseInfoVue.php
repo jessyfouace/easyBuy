@@ -42,7 +42,7 @@ if (!isset($_SESSION['nocookies'])) {
                 <p class="my-auto"><span class="font-weight-bold">Surface</span>: <span class="colororange font-weight-bold"><?= $houseInfo->getArea() ?> m²</span></p>
             </div>
             <div class="col-12">
-                <h2 class="price font-weight-bold text-right"><?= number_format($houseInfo->getPrice(), 2, ',', ' ') ?> €</h2>
+                <h2 class="price font-weight-bold text-right"><?= substr(number_format($houseInfo->getPrice(), 2, ',', ' '), 0, -3) ?> €</h2>
             </div>
             <div class="col-12">
                 <p class="text-right">Ref: <?= $houseInfo->getTokenAppartments(); ?></p>
@@ -82,7 +82,7 @@ if (!isset($_SESSION['nocookies'])) {
                 <div class="littlehr"></div>
                 <p><?= $houseInfo->getPrice() ?> Honoraires TTC inclus à la charge de l'acquéreur : <span class="colororange font-weight-bold">5 %</span> du prix du bien hors honoraires.</p>
                 <?php $calculPrice = $houseInfo->getPrice() * 0.95 ?>
-                <p>Prix du bien hors honoraires : <span class="font-weight-bold colororange"><?= number_format($calculPrice, 2, ',', ' ') ?> €</span></p>
+                <p>Prix du bien hors honoraires : <span class="font-weight-bold colororange"><?= substr(number_format($calculPrice, 2, ',', ' '), 0, -3) ?> €</span></p>
             </div>
         </div>
 
@@ -93,7 +93,7 @@ if (!isset($_SESSION['nocookies'])) {
             <div class="card">
                 <article class="card-body">
                     <?php foreach ($houseByToken[3] as $user) { ?>
-                    <h4 class="card-title text-center mb-4 mt-1">Contacter <?= $user->getFirstname() . ' ' . $user->getLastname() ?></h4>
+                    <h4 class="card-title text-center mb-4 mt-1">Contacter <a href="detailUser.php?idUserProfil=<?= $user->getIdUser() ?>"><?= $user->getFirstname() . ' ' . $user->getLastname() ?></a></h4>
                     <?php } ?>
                     <hr>
                     <?php if(!isset($_SESSION['mail'])){
