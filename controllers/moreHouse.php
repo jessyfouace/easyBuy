@@ -68,6 +68,10 @@ $messagePearPage = 5;
 
 $numberOfPage = ceil($allCount / $messagePearPage);
 
+// if ($_GET['page'] > $numberOfPage) {
+//     header('location: moreHouse.php?page=1');
+// }
+
 if (isset($_GET['page'])) {
     $actualPage = intval($_GET['page']);
 

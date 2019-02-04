@@ -14,8 +14,8 @@ function chargerClasse($classname)
 }
 session_start();
 spl_autoload_register('chargerClasse');
-$title = 'EasyBuy - Ajouter un biens';
-$isActive = 2;
+$title = 'EasyBuy - Détail utilisateur';
+$isActive = 9;
 $db = Database::BDD();
 
 require '../controllers/cookies.php';
@@ -56,6 +56,16 @@ if(isset($_POST['edit'])) {
                             'role' => $_SESSION['role']
                         ]);
                         $usersManager->updateUserPassword($updateUser);
+                        $_SESSION['firstname'] = $firstname;
+                        $_SESSION['lastname'] = $lastname;
+                        $_SESSION['mail'] = $mail;
+                        $_SESSION['password'] = $password;
+                        if (isset($_COOKIE['acceptation'])) {
+                            setCookie('firstname', $firstname, (time() + 60 * 60 * 24 * 365));
+                            setCookie('lastname', $lastname, (time() + 60 * 60 * 24 * 365));
+                            setCookie('mail', $mail, (time() + 60 * 60 * 24 * 365));
+                            setCookie('password', $password, (time() + 60 * 60 * 24 * 365));
+                        }
                         $messageOk = 'Profil Modifié';
                     } else {
                         $messageNo = 'Erreur dans la modification';
@@ -65,15 +75,22 @@ if(isset($_POST['edit'])) {
                 $messageNo = 'Erreur dans la modification';
             }
         } else {
+            $password = password_hash($_SESSION['password'], PASSWORD_DEFAULT);
             $updateUser = new Users([
                 'idUser' => $_SESSION['idUser'],
                 'firstname' => $firstname,
                 'lastname' => $lastname,
                 'mail' => $mail,
-                'password' => $_SESSION['password'],
+                'password' => $password,
                 'role' => $_SESSION['role']
             ]);
             $usersManager->updateUser($updateUser);
+            $_SESSION['firstname'] = $firstname;
+            $_SESSION['lastname'] = $lastname;
+            $_SESSION['mail'] = $mail;
+            setCookie('firstname', $firstname, (time() + 60 * 60 * 24 * 365));
+            setCookie('lastname', $lastname, (time() + 60 * 60 * 24 * 365));
+            setCookie('mail', $mail, (time() + 60 * 60 * 24 * 365));
             $messageOk = 'Profil Modifié';
         }
         header('Refresh: 1; url=detailUser.php?idUserProfil=' . $_SESSION['idUser']);

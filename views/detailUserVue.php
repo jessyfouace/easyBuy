@@ -22,7 +22,7 @@ include("template/header.php"); ?>
                     <?php }
                     } ?>
                     <?php if (isset($_SESSION['idUser'])) {
-                        if ($_SESSION['idUser'] !== $_GET['idUserProfil']) { ?>
+                        if ($_SESSION['idUser'] != $_GET['idUserProfil']) { ?>
                     <li class="nav-item">
                         <a href="" data-target="#contactUser" data-toggle="tab" class="nav-link">Contacter</a>
                     </li>
@@ -57,7 +57,7 @@ include("template/header.php"); ?>
                                         </tr>
                                         <tr>
                                             <td class="nohover">
-                                                <p class="price font-weight-bold"><?= number_format($house->getPrice(), 2, ',', ' ') ?> €</p>
+                                                <p class="price font-weight-bold"><?= substr(number_format($house->getPrice(), 2, ',', ' '), 0, -3) ?> €</p>
                                             </td>
                                         </tr>
                                     <?php } ?>
@@ -154,6 +154,26 @@ include("template/header.php"); ?>
                     </div>
                     <?php }
                     } ?>
+                    <?php if (isset($_SESSION['idUser'])) {
+                        if ($_SESSION['idUser'] != $_GET['idUserProfil']) { ?>
+                    <div class="tab-pane" id="contactUser">
+                        <form role="form" method="post">
+                            <?php foreach ($infoUser[0] as $user) { ?>
+                            
+                            <?php 
+                        } ?>
+                            <div class="form-group">
+                                <label class="col-form-label form-control-label"></label>
+                                <div class="col-12 text-center">
+                                    <input type="reset" class="btn btn-secondary" value="Annuler">
+                                    <input type="submit" class="btn btn-primary" name="edit" value="Sauvegarder">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <?php 
+                }
+            } ?>
                 </div>
             </div>
         </div>

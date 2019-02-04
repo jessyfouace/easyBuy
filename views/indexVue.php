@@ -44,7 +44,7 @@ if (!isset($_SESSION['nocookies'])) {
 <div style="background-color: #eceff1">
   <div class="col-12 col-lg-10 mx-auto pt-4 pb-4">
     <h2 class="text-center">Derniers biens</h2>
-    <p class="text-center">Présentation des 5 derniers biens inscrits.</p>
+    <p class="text-center">Présentation des 6 derniers biens inscrits.</p>
     <div class="col-12 row m-0 p-0">
       
       <?php
@@ -71,7 +71,7 @@ if (!isset($_SESSION['nocookies'])) {
           </script>
           <div class="card-body">
             <h4 class="card-title font-weight-bold"><?= substr(ucfirst($houseInfo->getTitle()), 0, 22) ?>..</h4>
-            <h4 class="card-title price font-weight-bold"><?= number_format($houseInfo->getPrice(), 2, ',', ' ') ?>€</h4>
+            <h4 class="card-title price font-weight-bold"><?= substr(number_format($houseInfo->getPrice(), 2, ',', ' '), 0 , -3) ?> €</h4>
             <?php foreach ($fiveLastHouse[2] as $departmentsInfo) { 
             if ($houseInfo->getDepartmentsId() == $departmentsInfo->getId()) { 
             ?>

@@ -27,7 +27,7 @@
     <div class="form-group">
         <button type="submit" class="btn btn-primary btn-block"> Connection  </button>
     </div>
-    <p>Pas encore inscrit ? <a class="colororange font-weight-bold" href="#">Inscrivez vous.</a></p>
+    <p>Pas encore inscrit ? <a class="colororange font-weight-bold" href="login.php" target="_blank">Inscrivez vous.</a></p>
 </form>
 <div id="result"></div>
 

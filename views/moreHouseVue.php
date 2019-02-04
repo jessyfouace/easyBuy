@@ -64,10 +64,10 @@ if (!isset($_SESSION['nocookies'])) {
                     imagesId = 'images' + '<?php echo $numberWhile ?>';
                     exploseImage(tableJson, imagesId);
                 </script>
-                <div class="col-7">
+                <div class="col-12 col-sm-7">
                     <p class="pt-2"><?= substr(ucfirst($house->getTitle()), 0, 75) ?>..</p>
                     <p class="card-text street"><i class="fas fa-map-marker-alt"></i> <?= $house->getCity(); ?></p>
-                    <h1 class="sizeh2 price font-weight-bold"><?= number_format($house->getPrice(), 2, ',', ' ') ?>€</h1>
+                    <h1 class="sizeh2 price font-weight-bold"><?= substr(number_format($house->getPrice(), 2, ',', ' '), 0, -3) ?>€</h1>
                     <hr>
                     <p><span><i class="fas fa-bath"></i> <?= $house->getBathroom(); ?> sdb </span><span><i class="fas fa-bed"></i> <?= $house->getBedroom(); ?>ch </span><span><i class="fab fa-laravel"></i> <?= $house->getArea(); ?>m²</span></p>
                 </div>
