@@ -145,6 +145,30 @@ class HouseManager
         return $arrayOfAll;
     }
 
+    public function removeHouseByToken($token)
+    {
+        $query = $this->getBdd()->prepare('DELETE FROM house WHERE tokenAppartments = :tokenAppartments');
+        $query->bindValue('tokenAppartments', $token, PDO::PARAM_STR);
+        $query->execute();
+    }
+
+    public function updateHouse(House $house)
+    {
+        $query = $this->getBdd()->prepare('UPDATE house SET title = :title, description = :description, departmentsId = :departmentsId, city = :city, area = :area, bedroom = :bedroom, bathroom = :bathroom, rooms = :rooms, orientation = :orientation, price = :price WHERE tokenAppartments = :tokenAppartments');
+        $query->bindValue('title', $house->getTitle(), PDO::PARAM_STR);
+        $query->bindValue('description', $house->getDescription(), PDO::PARAM_STR);
+        $query->bindValue('departmentsId', $house->getDepartmentsId(), PDO::PARAM_INT);
+        $query->bindValue('city', $house->getCity(), PDO::PARAM_STR);
+        $query->bindValue('area', $house->getArea(), PDO::PARAM_INT);
+        $query->bindValue('bedroom', $house->getBedroom(), PDO::PARAM_INT);
+        $query->bindValue('bathroom', $house->getBathroom(), PDO::PARAM_INT);
+        $query->bindValue('rooms', $house->getRooms(), PDO::PARAM_INT);
+        $query->bindValue('orientation', $house->getOrientation(), PDO::PARAM_STR);
+        $query->bindValue('price', $house->getPrice(), PDO::PARAM_INT);
+        $query->bindValue('tokenAppartments', $house->getTokenAppartments(), PDO::PARAM_STR);
+        $query->execute();
+    }
+
     /**
      * Get the value of _bdd
      */

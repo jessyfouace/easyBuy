@@ -117,3 +117,8 @@ function houseInfoCreateCarousel(jsonTable) {
         }
     }
 }
+
+function dflexmodal() {
+    let modal = document.getElementById('modal');
+    modal.classList.toggle('d-none')
+}

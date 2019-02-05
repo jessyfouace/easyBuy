@@ -52,7 +52,7 @@ include("template/header.php"); ?>
                                     <?php foreach ($infoUser[1] as $house) { ?>                                
                                         <tr>
                                             <td>
-                                                <a href="houseInfo?houseIdentification=<?= $house->getTokenAppartments() ?>"><?= $house->getTitle(); ?></a>
+                                                <a href="houseInfo.php?houseIdentification=<?= $house->getTokenAppartments() ?>"><?= $house->getTitle(); ?></a>
                                             </td>
                                         </tr>
                                         <tr>

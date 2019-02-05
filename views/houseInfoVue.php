@@ -47,6 +47,29 @@ if (!isset($_SESSION['nocookies'])) {
             <div class="col-12">
                 <p class="text-right">Ref: <?= $houseInfo->getTokenAppartments(); ?></p>
             </div>
+            <?php if (isset($_SESSION['idUser'])) {
+                if ($_SESSION['idUser'] == $houseInfo->getUserId() or $_SESSION['role'] == 'is_admin') { ?>
+            <div class="col-12 m-0 p-0 text-right">
+                <form action="updateHouse.php?houseIdentification=<?= $houseInfo->getTokenAppartments() ?>" method="post">
+                    <input type="button" onclick="dflexmodal()" class="btn btn-danger" value="Supprimer">
+                    <input type="submit" class="text-white btn btn-warning" value="Editer">
+                </form>
+                <div class="d-none alert alert-primary mt-2" id="modal">
+                    <p class="text-left">Souhaitez vous réellement supprimer <span class="colorred font-weight-bold">"<?= $houseInfo->getTitle(); ?></span>" ?</p>
+                    <form action="" method="post">
+                        <?php for ($i=1; $i < $exploseCount; $i++) { ?> 
+                        <input type="hidden" name="image<?= $i ?>" value="<?= $explose[$i]?>">
+                        <?php }?>
+                        <input type="hidden" name="imageId" value="<?= $houseInfo->getImagesId() ?>">
+                        <input type="hidden" name="houseIdentification" value="<?= $houseInfo->getTokenAppartments() ?>">
+                        <input class="btn btn-danger" name="removeHouse" type="submit" value="Supprimer">
+                        <input class="btn btn-info" type="submit" value="Annuler">
+                    </form>
+                </div>
+            </div>
+                <?php 
+                }
+            } ?>
         </div>
 
         <hr>

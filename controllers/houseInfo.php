@@ -18,6 +18,7 @@ $isActive = 9;
 $db = Database::BDD();
 
 $departments = new DepartmentsManager($db);
+$imageManager = new ImagesManager($db);
 $houseManager = new HouseManager($db);
 $usersManager = new UsersManager($db);
 
@@ -31,6 +32,32 @@ if (!empty($_GET['houseIdentification'])) {
     }
 } else {
     header('location: index.php');
+}
+
+if (isset($_POST['removeHouse'])) {
+    if (isset($_POST['houseIdentification'])) {
+        $houseToken = $houseManager->getHouseByToken($_POST['houseIdentification']);
+        if (!empty($houseByToken[0])) {
+            foreach ($houseToken[0] as $verificationUserId) {
+                if ($_SESSION['idUser'] == $verificationUserId->getUserId() or $_SESSION['role'] == 'is_admin') {
+                    if ($_POST['imageId'] == $verificationUserId->getImagesId()) {
+                        $arrayOfImages = [];
+                        for ($i=0; $i < 5; $i++) {
+                                if (isset($_POST['image' . $i])) {
+                                        $arrayOfImages[] = $_POST['image' . $i];
+                                } 
+                            }
+                        foreach ($arrayOfImages as $key => $images) {
+                            unlink($images);
+                        }
+                        $houseManager->removeHouseByToken($_POST['houseIdentification']);
+                        $imageManager->removeImagesById($_POST['imageId']);
+                        header('location: index.php');
+                    }
+                }
+            }
+        }
+    }
 }
 
 require '../controllers/cookies.php';

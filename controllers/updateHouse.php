@@ -15,7 +15,7 @@ function chargerClasse($classname)
 session_start();
 spl_autoload_register('chargerClasse');
 $title = 'EasyBuy - Ajouter un biens';
-$isActive = 2;
+$isActive = 9;
 $db = Database::BDD();
 
 require '../controllers/cookies.php';
@@ -25,15 +25,23 @@ if (isset($_SESSION['mail'])) {
     header('location: index.php');
 }
 
-$bytes = random_bytes(10);
-$token = bin2hex($bytes);
-
 $departments = new DepartmentsManager($db);
 $imageManager = new ImagesManager($db);
 $houseManager = new HouseManager($db);
 
 $allDepartments = $departments->getDepartments();
+$houseByToken = $houseManager->getHouseByToken($_GET['houseIdentification']);
 
+if (!empty($houseByToken[0])) {
+    foreach ($houseByToken[0] as $houseInfo) {
+        if ($_SESSION['idUser'] == $houseInfo->getUserId() or $_SESSION['role'] == 'is_admin') {
+        } else {
+            header('location: index.php');
+        }
+    }
+} else {
+    header('location: index.php');
+}
 
 $allDepartmentsOnTable = [];
 foreach ($allDepartments as $department) {
@@ -41,33 +49,47 @@ foreach ($allDepartments as $department) {
 }
 
 $errorTitle = '';
-$lastTitle = '';
-
 $errorDesc = '';
-$lastDesc = '';
-
 $errorDepartments = '';
-$lastDepartments = '';
-
 $errorCity = '';
-$lastCity = '';
-
 $errorArea = '';
-$lastArea = '';
-
 $errorBedrooms = '';
-$lastBedrooms = '';
-
 $errorBathrooms = '';
-$lastBathrooms = '';
-
 $errorRooms = '';
-$lastRooms = '';
-
 $errorOrientation = '';
-
 $errorPrice = '';
-$lastPrice = '';
+
+foreach ($houseByToken[0] as $infoHouse) {
+    $lastTitle = $infoHouse->getTitle();
+    $lastDesc = $infoHouse->getDescription();
+    foreach ($houseByToken[2] as $departmentInfo) {
+        $lastDepartments = $departmentInfo->getDepartmentsName();
+    }
+    $lastCity = $infoHouse->getCity();
+    $lastArea = $infoHouse->getArea();
+    $lastBedrooms = $infoHouse->getBedroom();
+    $lastBathrooms = $infoHouse->getBathroom();
+    $lastRooms = $infoHouse->getRooms();
+    $lastPrice = $infoHouse->getPrice();
+    $idImageForRemove = $infoHouse->getImagesId();
+    $tokenAppartments = $infoHouse->getTokenAppartments();
+}
+
+foreach ($houseByToken[1] as $image) {
+    $nameImages = $image->getLink();
+    $explode = explode(' ', $image->getLink());
+}
+
+for ($i=0; $i < 5; $i++) {
+    if (isset($_POST['lastImage' . $i])) {
+        unlink($_POST['lastImage' . $i]);
+        $nameImages = str_replace(' ' . $_POST['lastImage' . $i], '', $nameImages);
+        $imageManager->updateImageById($idImageForRemove, $nameImages);
+        header('location: updateHouse.php?houseIdentification=' . $_GET['houseIdentification']);
+        break;
+    }
+}
+    
 
 $errorNumberImage = '';
 $messageImage = '';
@@ -81,7 +103,6 @@ $goodFinish = '';
 
 $error = true;
 
-if (!empty($_POST['token'])) {
     if (!empty($_POST['title'])) {
         $titles = htmlspecialchars($_POST['title']);
         $lastTitle = $titles;
@@ -99,27 +120,27 @@ if (!empty($_POST['token'])) {
                         $city = htmlspecialchars($_POST['city']);
                         $lastCity = $city;
                         if (!empty($_POST['area'])) {
-                            $area = (int) $_POST['area'];
+                            $area = (int)$_POST['area'];
                             $lastArea = $area;
                             if (!empty($_POST['bedrooms'])) {
-                                $bedrooms = (int) $_POST['bedrooms'];
+                                $bedrooms = (int)$_POST['bedrooms'];
                                 $lastBedrooms = $bedrooms;
                                 if (!empty($_POST['bathrooms'])) {
-                                    $bathrooms = (int) $_POST['bathrooms'];
+                                    $bathrooms = (int)$_POST['bathrooms'];
                                     $lastBathrooms = $bathrooms;
                                     if (!empty($_POST['rooms'])) {
-                                        $rooms = (int) $_POST['rooms'];
-                                        $lastRooms = (int) $rooms;
+                                        $rooms = (int)$_POST['rooms'];
+                                        $lastRooms = (int)$rooms;
                                         if (!empty($_POST['orientation']) and $_POST['orientation'] == 'Nord' or $_POST['orientation'] == 'Sud' or $_POST['orientation'] == 'Ouest' or $_POST['orientation'] == 'Est') {
                                             $orientation = htmlspecialchars($_POST['orientation']);
                                             if (!empty($_POST['price'])) {
-                                                $price = (int) $_POST['price'];
+                                                $price = (int)$_POST['price'];
                                                 $lastPrice = $price;
                                                 if (!empty($_POST['numberImage'])) {
                                                     $error = false;
-                                                    $numberImage = (int) $_POST['numberImage'];
+                                                    $numberImage = (int)$_POST['numberImage'];
                                                     $tableOfImage = [];
-                                                    for ($i=1; $i < $numberImage + 1; $i++) { 
+                                                    for ($i = 1; $i < $numberImage + 1; $i++) {
                                                         $tableOfImage[] = 'image' . $i;
                                                     }
                                                     $newTableOfImage = [];
@@ -163,46 +184,37 @@ if (!empty($_POST['token'])) {
                                                         }
                                                         $countTable = count($tableOkImage);
                                                         if ($countTable >= 1 and $uploadOk = 1) {
-                                                            $stringAllImages = '';
+                                                            foreach ($houseByToken[1] as $image) {
+                                                                $stringAllImages = $image->getLink();
+                                                            }
                                                             for ($i = 0; $i < $numberImage; $i++) {
                                                                 $stringAllImages = $stringAllImages . ' ' . '../assets/houseImg/' . $_SESSION['idUser'] . '/' . $tableOkImage[$i];
                                                             }
-                                                            $image = new Images([
-                                                                'link' => $stringAllImages,
-                                                                'alt' => 'Désolé aucun titre n\'as étais ajouter à cette image'
-                                                            ]);
 
-                                                            $idImage = $imageManager->addImages($image);
-                                                            $idImage = (int) $idImage;
-
-                                                            $getDepartmentsId = $departments->getDepartmentByName($departmentsSecure);
-                                                            $getDepartmentsId = (int) $getDepartmentsId[0];
-
-                                                            $house = new House([
-                                                                'tokenAppartments' => $token,
-                                                                'departmentsId' => $getDepartmentsId,
-                                                                'city' => $city,
-                                                                'title' => $titles,
-                                                                'description' => $desc,
-                                                                'area' => $area,
-                                                                'bedroom' => $bedrooms,
-                                                                'bathroom' => $bathrooms,
-                                                                'rooms' => $rooms,
-                                                                'orientation' => $orientation,
-                                                                'price' => $price,
-                                                                'imagesId' => $idImage,
-                                                                'userId' => $_SESSION['idUser']
-                                                            ]);
-                                                            $houseManager->addHouse($house);
-                                                            $goodFinish = 'Votre biens à bien étais ajouté.';
-                                                            header('Refresh: 0.9; url=addHouse.php'); 
+                                                            $idImage = $imageManager->updateImageById($idImageForRemove, $stringAllImages);
                                                         }
                                                     } else {
                                                         $finish = 'Il s\'emblerait qu\'une image ai étais oubliée.';
                                                     }
-                                                } else {
-                                                    $finish = 'Vous pouvez au maximum mettre 5 images.';
                                                 }
+                                                $getDepartmentsId = $departments->getDepartmentByName($departmentsSecure);
+                                                $getDepartmentsId = (int)$getDepartmentsId[0];
+                                                $house = new House([
+                                                    'departmentsId' => $getDepartmentsId,
+                                                    'city' => $city,
+                                                    'title' => $titles,
+                                                    'description' => $desc,
+                                                    'area' => $area,
+                                                    'bedroom' => $bedrooms,
+                                                    'bathroom' => $bathrooms,
+                                                    'rooms' => $rooms,
+                                                    'orientation' => $orientation,
+                                                    'price' => $price,
+                                                    'tokenAppartments' => $tokenAppartments,
+                                                ]);
+                                                $houseManager->updateHouse($house);
+                                                $goodFinish = 'Votre biens à bien étais modifié.';
+                                                header('Refresh: 0.9; url=houseInfo.php?houseIdentification=' . $_GET['houseIdentification']);
                                             } else {
                                                 $finish = 'Erreur sur le prix.';
                                             }
@@ -233,9 +245,6 @@ if (!empty($_POST['token'])) {
         } else {
             $finish = 'Erreur sur la description';
         }
-    } else {
-        $finish = 'Erreur sur le titre.';
     }
-}
 
-require "../views/addHouseVue.php";
+require "../views/updateHouseVue.php";
