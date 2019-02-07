@@ -368,12 +368,11 @@ a:hover{
 	font-size: 12px;
 	line-height: 36px;
 	color: white;
-	padding: 0 10px 0 60px;
+	padding: 0 10px 0 25px;
 	position: relative;
     background-color: #eceff1 !important;
 }
 .breadcrumb a:first-child {
-	padding-left: 46px;
 	border-radius: 5px 0 0 5px;
 }
 .breadcrumb a:first-child:before {

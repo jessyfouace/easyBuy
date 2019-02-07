@@ -3,7 +3,7 @@ include("template/header.php"); ?>
 
 <div style="margin-top: 100px;">
     <h1 style="font-size: 30px;" class="text-center">Modifier un biens</h1>
-    <div class="col-12 col-md-10 mx-auto">
+    <div class="col-md-10 col-12 m-0 p-0 mx-auto">
         <div class="breadcrumb flat">
             <a href="index.php">Accueil</a>
             <a href="houseInfo.php?houseIdentification=<?= $_GET['houseIdentification'] ?>"><?= $lastTitle ?></a>

@@ -2,7 +2,7 @@
 include("template/header.php"); ?>
 
 <div style="margin-top: 100px;">
-    <div class="col-lg-10 mx-auto">
+    <div class="col-lg-10 col-12 m-0 p-0 mx-auto">
         <div class="breadcrumb flat">
                 <a href="index.php">Accueil</a>
                 <a href="#" class="active">Ajouter un biens</a>

@@ -11,7 +11,7 @@ if (!isset($_SESSION['nocookies'])) {
 
 <?php foreach ($houseByToken[0] as $houseInfo) { ?>
 <h1 style="margin-top: 100px !important;" class="mb-4 text-center"> <?= $houseInfo->getTitle() ?></h1>
-    <div class="col-lg-10 mx-auto">
+    <div class="col-lg-10 col-12 m-0 p-0 mx-auto">
         <div class="breadcrumb flat">
                 <a href="index.php">Accueil</a>
                 <a href="moreHouse.php">Tous les biens</a>
@@ -122,14 +122,19 @@ if (!isset($_SESSION['nocookies'])) {
         <div class="col-md-11 col-12 mx-auto">
             <div class="card">
                 <article class="card-body">
-                    <?php foreach ($houseByToken[3] as $user) { ?>
+                    <?php foreach ($houseByToken[3] as $user) {
+                    $idUser = $user->getIdUser();    
+                    ?>
                     <h4 class="card-title text-center mb-4 mt-1">Contacter <a href="detailUser.php?idUserProfil=<?= $user->getIdUser() ?>"><?= $user->getFirstname() . ' ' . $user->getLastname() ?></a></h4>
                     <?php } ?>
                     <hr>
                     <?php if(!isset($_SESSION['mail'])){
                         require('../views/connexionVue.php');
-                    } else { ?>
+                    } else {
+                    if ($_SESSION['idUser'] != $idUser) {
+                    ?>
                     <form action="" method="post">
+                        <h2 class="colorgreen sizeh2 font-weight-bold text-center"><?= $messageOk ?></h2>
                         <div class="form-group">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -138,17 +143,27 @@ if (!isset($_SESSION['nocookies'])) {
                                 <input name="" class="form-control" value="<?= $_SESSION['mail'] ?>" type="email" disabled>
                             </div>
                         </div>
+                        <input type="hidden" name="userIdTaker" value="<?= $idUser; ?>">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <label class="w-100" for="object">Objet:</label>
+                                <input type="text" name="object" id="object" class="form-control" placeholder='Objet' rows="5"/>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <div class="input-group">
                                 <label class="w-100" for="text">Message:</label>
-                                <textarea name="" id="text" class="form-control" placeholder="..." rows="5"></textarea>
+                                <textarea name="text" id="text" class="form-control" placeholder="..." rows="5"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn orangebg text-white btn-block"> Envoyer  </button>
                         </div>
                     </form>
-                    <?php } ?>
+                    <?php } else { ?>
+                        <h2 class="colorred sizeh2">Vous ne pouvez pas vous envoyer de message.</h2>
+                    <?php } 
+                    } ?>
                 </article>
             </div>
         </div>

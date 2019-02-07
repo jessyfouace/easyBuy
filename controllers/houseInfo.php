@@ -21,6 +21,9 @@ $departments = new DepartmentsManager($db);
 $imageManager = new ImagesManager($db);
 $houseManager = new HouseManager($db);
 $usersManager = new UsersManager($db);
+$messageManager = new MessageManager($db);
+
+$messageOk = '';
 
 if (!empty($_GET['houseIdentification'])) {
     $houseByToken = $houseManager->getHouseByToken($_GET['houseIdentification']);
@@ -59,6 +62,8 @@ if (isset($_POST['removeHouse'])) {
         }
     }
 }
+
+require '../controllers/sendMessage.php';
 
 require '../controllers/cookies.php';
 

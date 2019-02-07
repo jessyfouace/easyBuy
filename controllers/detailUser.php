@@ -112,4 +112,6 @@ if (isset($_POST['removeMessage']) and isset($_POST['messageId'])) {
     }
 }
 
+require '../controllers/sendMessage.php';
+
 require "../views/detailUserVue.php";
