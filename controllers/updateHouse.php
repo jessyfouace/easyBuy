@@ -82,10 +82,16 @@ foreach ($houseByToken[1] as $image) {
 
 for ($i=0; $i < 5; $i++) {
     if (isset($_POST['lastImage' . $i])) {
-        unlink($_POST['lastImage' . $i]);
-        $nameImages = str_replace(' ' . $_POST['lastImage' . $i], '', $nameImages);
-        $imageManager->updateImageById($idImageForRemove, $nameImages);
-        header('location: updateHouse.php?houseIdentification=' . $_GET['houseIdentification']);
+        $linkImage = $_POST['lastImage' . $i];
+        $explodeTest = explode('/', $linkImage);
+        if (!isset($explodeTest[5]) and isset($explodeTest[0]) and isset($explodeTest[1]) and isset($explodeTest[2]) and isset($explodeTest[3]) and isset($explodeTest[4])) {
+            if ($explodeTest[0] == '..' and $explodeTest[1] == 'assets' and $explodeTest[2] == 'houseImg' and $explodeTest[3] == $_SESSION['idUser'] or $_SESSION['role'] == 'is_admin' and substr($explodeTest[4], -3) == 'gif' or substr($explodeTest[4], -3) == 'png' or substr($explodeTest[4], -3) == 'jpg' or substr($explodeTest[4], -3) == 'jpeg') {
+                unlink($_POST['lastImage' . $i]);
+                $nameImages = str_replace(' ' . $_POST['lastImage' . $i], '', $nameImages);
+                $imageManager->updateImageById($idImageForRemove, $nameImages);
+                header('location: updateHouse.php?houseIdentification=' . $_GET['houseIdentification']);
+            }
+        }
         break;
     }
 }

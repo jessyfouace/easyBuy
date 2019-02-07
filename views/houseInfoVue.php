@@ -11,6 +11,13 @@ if (!isset($_SESSION['nocookies'])) {
 
 <?php foreach ($houseByToken[0] as $houseInfo) { ?>
 <h1 style="margin-top: 100px !important;" class="mb-4 text-center"> <?= $houseInfo->getTitle() ?></h1>
+    <div class="col-lg-10 mx-auto">
+        <div class="breadcrumb flat">
+                <a href="index.php">Accueil</a>
+                <a href="moreHouse.php">Tous les biens</a>
+                <a href="#" class="active"><?= $houseInfo->getTitle() ?></a>
+        </div>
+    </div>
 <div class="row col-12 col-lg-10 mx-auto m-0 p-0">
     <div class="col-lg-7 col-md-10 col-12 m-0 p-0 m-0 p-0">
         <div id="carouselExampleControls" class="carousel slide col-12 m-0 p-0 height250 mx-auto" data-ride="carousel">

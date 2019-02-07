@@ -26,7 +26,7 @@ class UsersManager
         }
         $arrayOfAll[] = $arrayOfUsers;
         $arrayOfAll[] = $arrayOfHouse;
-
+        
         return $arrayOfAll;
     }
 

@@ -4,6 +4,13 @@ include("template/header.php"); ?>
 <div style="margin-top: 100px;">
     <h1 style="font-size: 30px;" class="text-center">Modifier un biens</h1>
     <div class="col-12 col-md-10 mx-auto">
+        <div class="breadcrumb flat">
+            <a href="index.php">Accueil</a>
+            <a href="houseInfo.php?houseIdentification=<?= $_GET['houseIdentification'] ?>"><?= $lastTitle ?></a>
+            <a href="#" class="active">Modifier</a>
+        </div>
+    </div>
+    <div class="col-12 col-md-10 mx-auto">
         <h2 class="colorgreen text-center sizeh2 font-weight-bold"><?= $goodFinish ?></h2>
         <h2 class="colorred text-center sizeh2 font-weight-bold"><?= $finish ?></h2>
         <h2 class="sizeh2 colorred font-weight-bold text-center">Si vous souhaitez supprimer des images, faite le avant de modifier le formulaire.</h2>

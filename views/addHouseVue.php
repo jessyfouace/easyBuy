@@ -2,6 +2,12 @@
 include("template/header.php"); ?>
 
 <div style="margin-top: 100px;">
+    <div class="col-lg-10 mx-auto">
+        <div class="breadcrumb flat">
+                <a href="index.php">Accueil</a>
+                <a href="#" class="active">Ajouter un biens</a>
+        </div>
+    </div>
     <h1 style="font-size: 30px;" class="text-center">Ajouter un biens</h1>
     <div class="col-12 col-md-10 mx-auto">
         <h2 class="colorgreen text-center sizeh2 font-weight-bold"><?= $goodFinish ?></h2>

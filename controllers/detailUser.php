@@ -21,10 +21,11 @@ $db = Database::BDD();
 require '../controllers/cookies.php';
 
 $usersManager = new UsersManager($db);
-
+$messageManager = new MessageManager($db);
 if (isset($_GET['idUserProfil'])) {
     $id = (int) $_GET['idUserProfil'];
     $infoUser = $usersManager->getUserById($id);
+    $infoMessage = $messageManager->getMessageById($id);
     if (empty($infoUser[0])) {
         header('location: index.php');
     }
@@ -94,6 +95,20 @@ if(isset($_POST['edit'])) {
             $messageOk = 'Profil Modifié';
         }
         header('Refresh: 1; url=detailUser.php?idUserProfil=' . $_SESSION['idUser']);
+    }
+}
+
+if (isset($_POST['removeMessage']) and isset($_POST['messageId'])) {
+    $idMessage = (int) $_POST['messageId'];
+    foreach ($infoMessage[0] as $message) {
+        if ($message->getIdMessage() == $idMessage) {
+            if ($message->getUserIdTaker() == $_SESSION['idUser']) {
+                $messageManager->removeMessage($idMessage);
+                $messageOk = 'Message Supprimé';
+                header('refresh: 1; url=detailUser.php?idUserProfil=' . $_GET['idUserProfil']);
+                break;
+            }
+        }
     }
 }
 
