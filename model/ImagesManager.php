@@ -17,6 +17,23 @@ class ImagesManager
         return $this->getBdd()->lastInsertId();
     }
 
+    public function removeImagesById($id)
+    {
+        $id = (int) $id;
+        $query = $this->getBdd()->prepare('DELETE FROM images WHERE idImages = :idImages');
+        $query->bindValue('idImages', $id, PDO::PARAM_INT);
+        $query->execute();
+    }
+
+    public function updateImageById($id,string $link)
+    {
+        $id = (int) $id;
+        $query = $this->getBdd()->prepare('UPDATE images SET link = :link WHERE idImages = :idImages');
+        $query->bindValue('link', $link, PDO::PARAM_STR);
+        $query->bindValue('idImages', $id, PDO::PARAM_STR);
+        $query->execute();
+    }
+
 
     /**
      * Get the value of _bdd

@@ -1,5 +1,13 @@
 <?php
 include("template/header.php"); ?>
+<?php 
+if (!isset($_SESSION['nocookies'])) {
+    if (!isset($_COOKIE['acceptation'])) {
+        require("../views/cookiesVue.php");
+    } else {
+        $_SESSION['nocookies'] = 'true';
+    }
+} ?>
 
 <div style="margin-top: 100px;">
     <div class="container">
@@ -52,7 +60,7 @@ include("template/header.php"); ?>
                                     <?php foreach ($infoUser[1] as $house) { ?>                                
                                         <tr>
                                             <td>
-                                                <a href="houseInfo?houseIdentification=<?= $house->getTokenAppartments() ?>"><?= $house->getTitle(); ?></a>
+                                                <a href="houseInfo.php?houseIdentification=<?= $house->getTokenAppartments() ?>"><?= $house->getTitle(); ?></a>
                                             </td>
                                         </tr>
                                         <tr>
@@ -68,38 +76,24 @@ include("template/header.php"); ?>
                         <?php } ?>
                     </div>
                     <div class="tab-pane" id="messages">
-                        <div class="alert alert-info alert-dismissable">
-                            <a class="panel-close close" data-dismiss="alert">×</a> This is an <strong>.alert</strong>. Use this to show important messages to the user.
-                        </div>
-                        <table class="table table-hover table-striped">
-                            <tbody>                                    
-                                <tr>
-                                    <td>
-                                    <span class="float-right font-weight-bold">3 hrs ago</span> Here is your a link to the latest summary report from the..
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                    <span class="float-right font-weight-bold">Yesterday</span> There has been a request on your account since that was..
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                    <span class="float-right font-weight-bold">9/10</span> Porttitor vitae ultrices quis, dapibus id dolor. Morbi venenatis lacinia rhoncus. 
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                    <span class="float-right font-weight-bold">9/4</span> Vestibulum tincidunt ullamcorper eros eget luctus. 
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                    <span class="float-right font-weight-bold">9/4</span> Maxamillion ais the fix for tibulum tincidunt ullamcorper eros. 
-                                    </td>
-                                </tr>
-                            </tbody> 
-                        </table>
+                    <?php foreach ($infoMessage[0] as $text) { ?>
+                        <?php foreach ($infoMessage[1] as $message) { ?>
+                            <div>
+                                <p style="border-radius: 0px; border-bottom: 0px;" class="alert alert-info sizeh2 mt-2 mb-0">En provenance de: <a class="colororange" href="detailUser.php?idUserProfil=<?= $message->getIdUser() ?>"><?= $message->getFirstname() . ' ' . $message->getLastname() ?></a></p>
+                                <p style="border-radius: 0px; border-top: 0px;" class="alert alert-info mt-0 mb-0">Mail: <?= $message->getMail(); ?></p>
+                                <?php if ($text->getUserIdSender() == $message->getIdUser()) { ?> 
+                                <p style="border-radius: 0px; border-bottom: 0px;" class="alert alert-secondary mt-0 mb-0">Objet: <?= $text->getObject(); ?></p>
+                                <p style="border-radius: 0px; border-top: 0px;" class="alert alert-secondary mt-0 mb-0"><?= $text->getText(); ?></p>
+                                <form class="mt-0 mb-4" action="" method="post">
+                                    <input type="hidden" name="messageId" value="<?= $text->getIdMessage() ?>">
+                                    <input type="submit" class="btn btn-danger col-12" name="removeMessage" value="Supprimer le message">
+                                </form>  
+                                <?php
+                                } ?>
+                            </div>
+                            <?php break; ?> 
+                        <?php }
+                    } ?>
                     </div>
                     <?php if (isset($_SESSION['idUser'])) {
                         if ($_SESSION['idUser'] == $_GET['idUserProfil']) { ?>
@@ -157,23 +151,41 @@ include("template/header.php"); ?>
                     <?php if (isset($_SESSION['idUser'])) {
                         if ($_SESSION['idUser'] != $_GET['idUserProfil']) { ?>
                     <div class="tab-pane" id="contactUser">
-                        <form role="form" method="post">
-                            <?php foreach ($infoUser[0] as $user) { ?>
-                            
-                            <?php 
-                        } ?>
-                            <div class="form-group">
-                                <label class="col-form-label form-control-label"></label>
-                                <div class="col-12 text-center">
-                                    <input type="reset" class="btn btn-secondary" value="Annuler">
-                                    <input type="submit" class="btn btn-primary" name="edit" value="Sauvegarder">
+                            <div class="col-md-10 col-12 mx-auto m-0 p-0">
+                                <div class="col-md-11 col-12 mx-auto">
+                                    <div class="card">
+                                        <article class="card-body">
+                                            <?php if (!isset($_SESSION['mail'])) {
+                                                require('../views/connexionVue.php');
+                                            } else { ?>
+                                            <form action="" method="post">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"> <i class="fas fa-envelope"></i> </span>
+                                                        </div>
+                                                        <input name="" class="form-control" value="<?= $_SESSION['mail'] ?>" type="email" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <label class="w-100" for="text">Message:</label>
+                                                        <textarea name="" id="text" class="form-control" placeholder="..." rows="5"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <button type="submit" class="btn orangebg text-white btn-block"> Envoyer  </button>
+                                                </div>
+                                            </form>
+                                            <?php 
+                                        } ?>
+                                        </article>
+                                    </div>
                                 </div>
                             </div>
-                        </form>
-                    </div>
-                    <?php 
-                }
-            } ?>
+                            <?php 
+                        }
+                    } ?>
                 </div>
             </div>
         </div>

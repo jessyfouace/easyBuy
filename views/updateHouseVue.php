@@ -2,20 +2,21 @@
 include("template/header.php"); ?>
 
 <div style="margin-top: 100px;">
-    <div class="col-lg-10 mx-auto">
+    <h1 style="font-size: 30px;" class="text-center">Modifier un biens</h1>
+    <div class="col-12 col-md-10 mx-auto">
         <div class="breadcrumb flat">
-                <a href="index.php">Accueil</a>
-                <a href="#" class="active">Ajouter un biens</a>
+            <a href="index.php">Accueil</a>
+            <a href="houseInfo.php?houseIdentification=<?= $_GET['houseIdentification'] ?>"><?= $lastTitle ?></a>
+            <a href="#" class="active">Modifier</a>
         </div>
     </div>
-    <h1 style="font-size: 30px;" class="text-center">Ajouter un biens</h1>
     <div class="col-12 col-md-10 mx-auto">
         <h2 class="colorgreen text-center sizeh2 font-weight-bold"><?= $goodFinish ?></h2>
         <h2 class="colorred text-center sizeh2 font-weight-bold"><?= $finish ?></h2>
+        <h2 class="sizeh2 colorred font-weight-bold text-center">Si vous souhaitez supprimer des images, faite le avant de modifier le formulaire.</h2>
         <p>* est un champ obligatoire</p>
-        <form action="addHouse.php" method="post" enctype="multipart/form-data">
+        <form action="updateHouse.php?houseIdentification=<?= $_GET['houseIdentification'] ?>" method="post" enctype="multipart/form-data">
             <div class="form-group">
-                <input type="hidden" name="token" value="<?= $token ?>" required>
                 <div class="input-group">
                     <label for="title" class="col-12 m-0 p-0 pb-2">Titre: *</label>
                     <input name="title" id="title" class="form-control" placeholder="Titre" type="text" value="<?= $lastTitle ?>" required>
@@ -61,15 +62,27 @@ include("template/header.php"); ?>
                     <label for="price" class="col-12 m-0 p-0 pb-2">Prix: *</label>
                     <input name="price" id="price" class="form-control" placeholder="Prix (Ex: 180 000)" value="<?= $lastPrice ?>" type="number">
                 </div>
+                <?php
+                $countImage = 0;
+                foreach ($explode as $key => $imageNumber) {
+                    if ($key != 0) {
+                        $countImage++;
+                    }
+                }
+                if ($countImage < 5) { ?>
                 <div class="input-group pt-3">
                     <label for="addImage" class="col-12 m-0 p-0 pb-2">Ajouter des Images: *</label>
-                    <select class="form-control" name="numberImage" id="addImage" onchange='addInput()' required>
+                    <select class="form-control" name="numberImage" id="addImage" onchange='addInput()'>
                         <option value="" selected disabled>Ajouter des Images</option>
-                        <?php for ($i = 1; $i < 6; $i++) { ?>
+                        <?php 
+                        $countImage = 6 - $countImage;
+                        for ($i = 1; $i < $countImage; $i++) { ?>
                             <option value="<?= $i ?>"><?= $i ?> Images</option>
-                        <?php } ?>
+                        <?php 
+                    } ?>
                     </select>
                 </div>
+                <?php } ?>
                 <div id="newInput" class="col-12 m-0 p-0 row">
                 </div>
                 <div class="col-12 text-center">
@@ -77,6 +90,24 @@ include("template/header.php"); ?>
                 </div>
             </div>
         </form>
+        <h2 class="pt-3">Anciennes photo:</h2>
+                <div class="row col-12 m-0 p-0">
+                <?php
+                $i = 0;
+                foreach ($explode as $key => $linkImage) {
+                    if ($key != 0) {
+                        $i++; ?>
+                    <div class="col-12 col-md-5 col-xl-4 mx-auto mt-4">
+                        <form action="updateHouse.php?houseIdentification=<?= $_GET['houseIdentification'] ?>" method="post">
+                            <input type="hidden" name="lastImage<?= $i ?>" value="<?= $linkImage ?>">
+                            <input class="btn btn-danger" style="position: absolute; right: 0; top: -10px;" type="submit" value="X">
+                        </form>
+                        <img style="width: 100%; height: 20em;" src="<?= $linkImage ?>" alt="Cette image ne contient pas de description">
+                    </div>
+                <?php 
+            }
+        } ?>
+        </div>
     </div>
 </div>
 

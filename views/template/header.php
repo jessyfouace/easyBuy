@@ -7,6 +7,7 @@
   <title><?php echo $title; ?></title>
   <meta name="description" content="easyBuy, agence de vente de maison entre particuler">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="theme-color" content="#ff5722">
 
   <link rel="manifest" href="site.webmanifest">
   <link rel="apple-touch-icon" href="icon.png">
