@@ -11,7 +11,7 @@ if (!isset($_SESSION['nocookies'])) {
     <div style="margin-top: 70px;">
         <p class="pt-5 colorred sizeh2 text-center font-weight-bold"><?= $errorMessage; ?></p>
     </div>
-    <div class="col-lg-10 mx-auto">
+    <div class="col-lg-10 col-12 m-0 p-0 mx-auto">
         <div class="breadcrumb flat">
                 <a href="index.php">Accueil</a>
                 <a href="#" class="active">Tous les biens</a>

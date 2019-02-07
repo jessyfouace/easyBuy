@@ -37,6 +37,16 @@ class MessageManager
         $query->execute();
     }
 
+    public function addMessage(Message $message)
+    {
+        $query = $this->getBdd()->prepare('INSERT INTO message (text, userIdSender, userIdTaker, object) VALUES(:text, :userIdSender, :userIdTaker, :object)');
+        $query->bindValue('text', $message->getText(), PDO::PARAM_STR);
+        $query->bindValue('userIdSender', $message->getUserIdSender(), PDO::PARAM_INT);
+        $query->bindValue('userIdTaker', $message->getUserIdTaker(), PDO::PARAM_INT);
+        $query->bindValue('object', $message->getObject(), PDO::PARAM_STR);
+        $query->execute();
+    }
+
     /**
      * Get the value of _bdd
      */

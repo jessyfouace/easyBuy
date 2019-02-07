@@ -167,10 +167,17 @@ if (!isset($_SESSION['nocookies'])) {
                                                         <input name="" class="form-control" value="<?= $_SESSION['mail'] ?>" type="email" disabled>
                                                     </div>
                                                 </div>
+                                                <input type="hidden" name="userIdTaker" value="<?= $_GET['idUserProfil']; ?>">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <label class="w-100" for="object">Objet:</label>
+                                                        <input type="text" name="object" id="object" class="form-control" placeholder='Objet' rows="5"/>
+                                                    </div>
+                                                </div>
                                                 <div class="form-group">
                                                     <div class="input-group">
                                                         <label class="w-100" for="text">Message:</label>
-                                                        <textarea name="" id="text" class="form-control" placeholder="..." rows="5"></textarea>
+                                                        <textarea name="text" id="text" class="form-control" placeholder="..." rows="5"></textarea>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
