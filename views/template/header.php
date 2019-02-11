@@ -50,6 +50,11 @@
           <li class="nav-item">
             <a class="nav-link" href="#footer"><i class="fas fa-envelope"></i> Contact</a>
           </li>
+          <?php if(isset($_SESSION['role']) and $_SESSION['role'] == 'is_admin') { ?>
+          <li class="nav-item <?php if ($isActive == 4) { ?> active <?php } ?>">
+            <a class="nav-link" href="admin.php"><i class="fas fa-user-secret"></i> Admin</a>
+          </li>
+          <?php } ?>
         </ul>
         <span class="navbar-text">
           <ul class="navbar-nav">

@@ -30,6 +30,43 @@ class UsersManager
         return $arrayOfAll;
     }
 
+    public function getFiveLastUser()
+    {
+        $query = $this->getBdd()->prepare('SELECT * FROM users ORDER BY idUser DESC LIMIT 5');
+        $query->execute();
+        $allUsers = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        $arrayOfUser = [];
+        foreach ($allUsers as $user) {
+            $arrayOfUser[] = new Users($user);
+        }
+        return $arrayOfUser;
+    }
+
+    public function getAllUsers()
+    {
+        $query = $this->getBdd()->prepare('SELECT * FROM users WHERE role != "is_admin" ORDER BY idUser DESC');
+        $query->execute();
+        $allUsers = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        $arrayOfUser = [];
+        foreach ($allUsers as $user) {
+            $arrayOfUser[] = new Users($user);
+        }
+        return $arrayOfUser;
+    }
+
+    public function countUsers()
+    {
+        $query = $this->getBdd()->prepare('SELECT COUNT(*) FROM users WHERE role != "is_admin" ');
+        $query->execute();
+        $allUsers = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($allUsers as $user) {
+            return $user;
+        }
+    }
+
     public function getUserByMail(string $mail)
     {
         $query = $this->getBdd()->prepare('SELECT * FROM users WHERE mail = :mail');

@@ -18,6 +18,11 @@ $title = 'EasyBuy - Ajouter un biens';
 $isActive = 2;
 $db = Database::BDD();
 
+$departments = new DepartmentsManager($db);
+$imageManager = new ImagesManager($db);
+$houseManager = new HouseManager($db);
+$usersManager = new UsersManager($db);
+
 require '../controllers/cookies.php';
 
 if (isset($_SESSION['mail'])) {
@@ -27,10 +32,6 @@ if (isset($_SESSION['mail'])) {
 
 $bytes = random_bytes(10);
 $token = bin2hex($bytes);
-
-$departments = new DepartmentsManager($db);
-$imageManager = new ImagesManager($db);
-$houseManager = new HouseManager($db);
 
 $allDepartments = $departments->getDepartments();
 

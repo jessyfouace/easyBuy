@@ -18,6 +18,8 @@ $title = 'EasyBuy - Ajouter un biens';
 $isActive = 9;
 $db = Database::BDD();
 
+$usersManager = new UsersManager($db);
+
 require '../controllers/cookies.php';
 
 if (isset($_SESSION['mail'])) {
