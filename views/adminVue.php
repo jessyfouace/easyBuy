@@ -89,6 +89,11 @@
                             <h3 class="card-title"><?= $toString ?> Biens</h3>
                             <?php } ?>
                             <div class="table-responsive">
+                            <div id="houses">
+                                <div class="row col-12 m-0 p-0 mb-2">
+                                    <input class="search form-control col-12 col-md-11" placeholder="Rechercher" />
+                                    <button class="sort btn btn-info col-12 col-md-1" data-sort="name">Trier</button>
+                                </div>
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
@@ -98,16 +103,16 @@
                                             <th>Vendeur</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody class="list">
                                         <?php foreach ($allHouse[0] as $houseInfo) { ?>
                                         <tr>
-                                            <td class="font-weight-bold"><a href="houseInfo.php?houseIdentification=<?= $houseInfo->getTokenAppartments(); ?>"><?= substr($houseInfo->getTitle(), 0, 28); ?>..</a></td>
-                                            <td class="font-weight-bold"><?= $houseInfo->getTokenAppartments(); ?></td>
+                                            <td class="titleHouse font-weight-bold"><a href="houseInfo.php?houseIdentification=<?= $houseInfo->getTokenAppartments(); ?>"><?= substr($houseInfo->getTitle(), 0, 28); ?>..</a></td>
+                                            <td class="tokenHouse font-weight-bold"><?= $houseInfo->getTokenAppartments(); ?></td>
                                             <td class="price font-weight-bold"><?= substr(number_format($houseInfo->getPrice(), 2, ',', '&nbsp;'), 0, -3) ?>&nbsp;€</td>
                                                 <?php foreach ($allHouse[1] as $userInfo) {
                                                     if ($houseInfo->getUserId() == $userInfo->getIdUser()) {
                                                         ?>
-                                            <td class="colororange font-weight-bold"><a href="detailUser.php?idUserProfil=<?= $userInfo->getIdUser() ?>"><?= $userInfo->getFirstname() . '&nbsp;' . $userInfo->getLastname() ?></a></td>
+                                            <td class="creatorHouse colororange font-weight-bold"><a href="detailUser.php?idUserProfil=<?= $userInfo->getIdUser() ?>"><?= $userInfo->getFirstname() . '&nbsp;' . $userInfo->getLastname() ?></a></td>
                                                 <?php
                                                 break;
                                             }
@@ -117,6 +122,7 @@
                                     } ?>
                                     </tbody>
                                 </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -132,6 +138,11 @@
                             <?php 
                         } ?>
                             <div class="table-responsive">
+                            <div id="users">
+                                <div class="row col-12 m-0 p-0 mb-2">
+                                    <input class="search form-control col-12" placeholder="Rechercher" />
+                                    <button class="sort btn btn-info col-12" data-sort="name">Trier</button>
+                                </div>
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
@@ -139,20 +150,23 @@
                                             <th>Prix</th>
                                             <th>Mail</th>
                                             <th>Profil</th>
+                                            <th>Bannir</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody class="list">
                                         <?php foreach ($allUsers as $userInfo) { ?>
                                         <tr>
-                                            <td><?= $userInfo->getFirstname() ?></td>
-                                            <td><?= $userInfo->getLastname() ?></td>
-                                            <td><?= $userInfo->getMail() ?></td>
+                                            <td class="firstname"><?= $userInfo->getFirstname() ?></td>
+                                            <td class="lastname"><?= $userInfo->getLastname() ?></td>
+                                            <td class="mail"><?= $userInfo->getMail() ?></td>
                                             <td><a class="btn btn-info" href="detailUser.php?idUserProfil=<?= $userInfo->getIdUser() ?>">Profil</a></td>
+                                            <td><form action="" method="post"><input class="btn btn-danger" type="button" value="Bannir"></form></td>
                                         </tr>
                                         <?php 
                                     } ?>
                                     </tbody>
                                 </table>
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -162,3 +176,16 @@
     </div>
 </div>
 <?php require('../views/template/footer.php') ?>
+<script>
+var options = {
+  valueNames: [ 'firstname', 'lastname', 'mail' ]
+};
+
+var userList = new List('users', options);
+
+var optionsHouse = {
+  valueNames: [ 'titleHouse', 'tokenHouse', 'creatorHouse' ]
+};
+
+var houseList = new List('houses', optionsHouse);
+</script>

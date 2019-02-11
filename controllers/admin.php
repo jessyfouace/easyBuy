@@ -44,4 +44,8 @@ if (isset($_GET['users']) and $_GET['users'] == 'true') {
     $countUsers = $usersManager->countUsers();
 }
 
+if (isset($_POST['banUser'])) {
+    echo $_POST['banUser'];
+}
+
 require '../views/adminVue.php';

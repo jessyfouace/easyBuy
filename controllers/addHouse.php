@@ -196,7 +196,7 @@ if (!empty($_POST['token'])) {
                                                             ]);
                                                             $houseManager->addHouse($house);
                                                             $goodFinish = 'Votre biens à bien étais ajouté.';
-                                                            header('Refresh: 0.9; url=addHouse.php'); 
+                                                            header('Refresh: 0.9; url=houseInfo.php?houseIdentification=' . $token); 
                                                         }
                                                     } else {
                                                         $finish = 'Il s\'emblerait qu\'une image ai étais oubliée.';

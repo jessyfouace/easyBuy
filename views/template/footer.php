@@ -1,5 +1,5 @@
  
-  <div style="background-color: #eceff1" id="footer">
+  <div style="background-color: #eceff1" class="col-12 footer" id="footer">
     <div class="col-12 col-lg-10 mx-auto pt-4 pb-3 text-center">
       <img src="../assets/img/logo.jpg" style="width: 100px;" alt="logo easy buy">
       <ul class="list-unstyled mt-3">

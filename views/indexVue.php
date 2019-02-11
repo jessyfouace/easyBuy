@@ -32,7 +32,7 @@ if (!isset($_SESSION['nocookies'])) {
   </a>
 </div>
 
-<div class="col-12 d-block mx-auto m-0 p-0 searchnav" style="position: absolute; top: 20%;">
+<div class="col-12 d-block mx-auto m-0 p-0 searchnav" style="position: relative; top: -250px;">
   <h1 class="col-8 mx-auto pl-2 pl-md-3 pl-lg-4 font-weight-bold" style="font-size: 25px;">Trouvez votre maison</h1>
   <form class="col-8 mx-auto p-0 m-0 mb-3 center mt-2 text-center" action="moreHouse.php" method="get">
       <input type="hidden" name="page" value="1">
@@ -41,7 +41,7 @@ if (!isset($_SESSION['nocookies'])) {
   </form>
 </div>
 
-<div style="background-color: #eceff1">
+<div class="changemt" style="background-color: #eceff1; margin-top: -122px;">
   <div class="col-12 col-lg-10 mx-auto pt-4 pb-4">
     <h2 class="text-center">Derniers biens</h2>
     <p class="text-center">Présentation des 6 derniers biens inscrits.</p>
@@ -163,6 +163,11 @@ if (!isset($_SESSION['nocookies'])) {
             source: availableTags,
             minLength:2
         });
+      });
+
+      PullToRefresh.init({
+         mainElement: '#refresh',
+         onRefresh: function(){ window.location.reload(); }
       });
 </script>
 
