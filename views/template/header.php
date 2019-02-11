@@ -12,6 +12,7 @@
   <link rel="manifest" href="site.webmanifest">
   <link rel="apple-touch-icon" href="icon.png">
   <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico"/>
+  <script src="../assets/js/listjs.js"></script>
   <!-- Place favicon.ico in the root directory -->
 
   <link rel="stylesheet" href="../assets/aos-master/dist/aos.css">
