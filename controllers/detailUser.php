@@ -18,10 +18,11 @@ $title = 'EasyBuy - Détail utilisateur';
 $isActive = 9;
 $db = Database::BDD();
 
-require '../controllers/cookies.php';
-
 $usersManager = new UsersManager($db);
 $messageManager = new MessageManager($db);
+
+require '../controllers/cookies.php';
+
 if (isset($_GET['idUserProfil'])) {
     $id = (int) $_GET['idUserProfil'];
     $infoUser = $usersManager->getUserById($id);

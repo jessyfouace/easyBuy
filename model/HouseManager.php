@@ -49,6 +49,44 @@ class HouseManager
         return $arrayOfAll;
     }
 
+    public function getTenLastHouse()
+    {
+        $query = $this->getBdd()->prepare('SELECT * FROM house LEFT JOIN users ON house.userId = users.idUser GROUP BY house.idAppartments DESC LIMIT 10');
+        $query->execute();
+        $allHouse = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        $arrayOfHouse = [];
+        $arrayOfUsers = [];
+        $arrayOfAll = [];
+
+        foreach ($allHouse as $house) {
+            $arrayOfHouse[] = new House($house);
+            $arrayOfUsers[] = new Users($house);
+        }
+        $arrayOfAll[] = $arrayOfHouse;
+        $arrayOfAll[] = $arrayOfUsers;
+        return $arrayOfAll;
+    }
+
+    public function getAllHouse()
+    {
+        $query = $this->getBdd()->prepare('SELECT * FROM house LEFT JOIN users ON house.userId = users.idUser GROUP BY house.idAppartments DESC');
+        $query->execute();
+        $allHouse = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        $arrayOfHouse = [];
+        $arrayOfUsers = [];
+        $arrayOfAll = [];
+
+        foreach ($allHouse as $house) {
+            $arrayOfHouse[] = new House($house);
+            $arrayOfUsers[] = new Users($house);
+        }
+        $arrayOfAll[] = $arrayOfHouse;
+        $arrayOfAll[] = $arrayOfUsers;
+        return $arrayOfAll;
+    }
+
     public function getHouseByToken($token)
     {
         $query = $this->getBdd()->prepare('SELECT * FROM house LEFT JOIN images ON house.imagesId = images.idImages LEFT JOIN departments ON house.departmentsId = departments.id LEFT JOIN users ON house.userId = users.idUser WHERE house.tokenAppartments = :tokenApps');
