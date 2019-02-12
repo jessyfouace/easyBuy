@@ -22,6 +22,7 @@ $imageManager = new ImagesManager($db);
 $houseManager = new HouseManager($db);
 $usersManager = new UsersManager($db);
 $messageManager = new MessageManager($db);
+$ticketManager = new TicketManager($db);
 
 $messageOk = '';
 
@@ -61,6 +62,23 @@ if (isset($_POST['removeHouse'])) {
             }
         }
     }
+}
+
+$okReport = '';
+if (isset($_POST['createTicket']) and $_POST['idCreatorTicket'] == $_SESSION['idUser']) {
+    $idCreatorTicket = (int) $_POST['idCreatorTicket'];
+    $idAppartmentsTicket = (int) $_POST['idAppartmentsTicket'];
+    $idUserTicket = (int) $_POST['idUserTicket'];
+
+    $newTicket = new Ticket([
+        'idCreatorTicket' => $idCreatorTicket,
+        'idAppartmentsTicket' => $idAppartmentsTicket,
+        'idUserTicket' => $idUserTicket
+    ]);
+
+    $ticketManager->createTicket($newTicket);
+    $okReport = 'Merci du signalement';
+    header('Refresh: 1; url=' . $_SERVER['REQUEST_URI']);
 }
 
 require '../controllers/sendMessage.php';

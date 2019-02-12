@@ -18,6 +18,7 @@ if (!isset($_SESSION['nocookies'])) {
                 <a href="#" class="active"><?= $houseInfo->getTitle() ?></a>
         </div>
     </div>
+    <p class="text-center colorgreen font-weight-bold sizeh2"><?= $okReport ?></p>
 <div class="row col-12 col-lg-10 mx-auto m-0 p-0">
     <div class="col-lg-7 col-md-10 col-12 m-0 p-0 m-0 p-0">
         <div id="carouselExampleControls" class="carousel slide col-12 m-0 p-0 height250 mx-auto" data-ride="carousel">
@@ -75,7 +76,16 @@ if (!isset($_SESSION['nocookies'])) {
                 </div>
             </div>
                 <?php 
-                }
+                } else { ?>
+                <div class="text-right col-12 m-0 p-0">
+                    <form action="" method="post">
+                        <input type="hidden" name="idCreatorTicket" value="<?= $_SESSION['idUser'] ?>">
+                        <input type="hidden" name="idUserTicket" value="<?= $houseInfo->getUserId(); ?> ">
+                        <input type="hidden" name="idAppartmentsTicket" value="<?= $houseInfo->getIdAppartments() ?>">
+                        <input type="submit" name="createTicket" value="Signaler" class="btn btn-warning text-white">
+                    </form>
+                </div>
+               <?php }
             } ?>
         </div>
 

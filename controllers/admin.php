@@ -22,6 +22,7 @@ $isActive = 4;
 $houseManager = new HouseManager($db);
 $usersManager = new UsersManager($db);
 $imagesManager = new ImagesManager($db);
+$ticketManager = new TicketManager($db);
 
 require '../controllers/cookies.php';
 
@@ -30,9 +31,18 @@ if (isset($_SESSION['role']) and $_SESSION['role'] == 'is_admin') {
     header('location: index.php');
 }
 
+if (isset($_POST['removeTicket'])) {
+    $removeTicket = (int) $_POST['removeTicket'];
+    $ticketManager->deleteTicketById($removeTicket);
+}
+
 if (!isset($_GET['repport']) and !isset($_GET['house']) and !isset($_GET['users'])) {
     $allHouse = $houseManager->getTenLastHouse();
     $allUsers = $usersManager->getFiveLastUser();
+}
+
+if (isset($_GET['repport']) and $_GET['repport'] == 'true') {
+    $allTickets = $ticketManager->getTicket();
 }
 
 if (isset($_GET['house']) and $_GET['house'] == 'true') {

@@ -78,7 +78,40 @@
             </section>
 
             <section class="<?php if (!isset($_GET['repport']) and $_GET['repport'] != 'true') { ?> d-none <?php }?>">
-
+                <div class="col-md-12 col-lg-8">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Numéro de ticket</th>
+                                    <th>Créateur Ticket</th>
+                                    <th>Appartement</th>
+                                    <th>Supprimer</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <?php foreach ($allTickets[0] as $ticket) { ?>
+                                <tr>
+                                    <td><?= $ticket->getIdTicket() ?></td>
+                                    <?php foreach ($allTickets[1] as $ticketCreator){ 
+                                    if ($ticketCreator->getIdUser() == $ticket->getIdCreatorTicket()) { ?>
+                                    <td><a href="detailUser.php?idUserProfil=<?= $ticketCreator->getIdUser() ?>"><?= $ticketCreator->getFirstname() . ' ' . $ticketCreator->getLastname() ?></td>
+                                    <?php break; 
+                                        }
+                                    } ?>
+                                    <?php foreach ($allTickets[2] as $houseTicket) {
+                                        if ($houseTicket->getIdAppartments() == $ticket->getIdappartmentsTicket()) { ?>
+                                    <td><a href="houseInfo.php?houseIdentification=<?= $houseTicket->getTokenAppartments() ?>"><?= substr($houseTicket->getTitle(), 0, 35) ?>...</a></td>
+                                    <?php break; 
+                                        }
+                                    } ?>
+                                    <td><form action="" method="post"><input type="hidden" name="removeTicket" value="<?= $ticket->getIdTicket() ?>"><input type="submit" class="btn btn-danger" value="Supprimer"></form></td>
+                                </tr>
+                            <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </section>
 
             <section class="<?php if (!isset($_GET['house']) and $_GET['house'] != 'true') { ?> d-none <?php }?>">
