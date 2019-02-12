@@ -114,6 +114,14 @@ class UsersManager
         $query->execute();
     }
 
+    public function removeUser($id)
+    {
+        $id = (int) $id;
+        $query = $this->getBdd()->prepare('DELETE FROM users WHERE idUser = :id');
+        $query->bindValue('id', $id, PDO::PARAM_INT);
+        $query->execute();
+    }
+
     /**
      * Get the value of _bdd
      */

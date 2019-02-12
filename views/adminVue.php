@@ -160,7 +160,7 @@
                                             <td class="lastname"><?= $userInfo->getLastname() ?></td>
                                             <td class="mail"><?= $userInfo->getMail() ?></td>
                                             <td><a class="btn btn-info" href="detailUser.php?idUserProfil=<?= $userInfo->getIdUser() ?>">Profil</a></td>
-                                            <td><form action="" method="post"><input class="btn btn-danger" type="button" value="Bannir"></form></td>
+                                            <td><form action="" method="post"><input class="btn btn-danger" type="submit" name="banUser" value="Bannir"><input type="hidden" name="idUser" value="<?= $userInfo->getIdUser() ?>"></form></td>
                                         </tr>
                                         <?php 
                                     } ?>
