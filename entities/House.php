@@ -69,7 +69,7 @@ class House
      * @param string $tokenAppartments
      * @return self
      */
-    public function setTokenAppartments(string $tokenAppartments)
+    public function setTokenAppartments($tokenAppartments)
     {
         $this->tokenAppartments = $tokenAppartments;
 
@@ -112,7 +112,7 @@ class House
      * @param string $city
      * @return self
      */
-    public function setCity(string $city)
+    public function setCity($city)
     {
         $this->city = $city;
 
@@ -133,7 +133,7 @@ class House
      * @param string $title
      * @return self
      */
-    public function setTitle(string $title)
+    public function setTitle($title)
     {
         $this->title = $title;
 
@@ -154,7 +154,7 @@ class House
      * @param string $description
      * @return self
      */
-    public function setDescription(string $description)
+    public function setDescription($description)
     {
         $this->description = $description;
 
@@ -263,7 +263,7 @@ class House
      * @param string $orientation
      * @return self
      */
-    public function setOrientation(string $orientation)
+    public function setOrientation($orientation)
     {
         $this->orientation = $orientation;
 

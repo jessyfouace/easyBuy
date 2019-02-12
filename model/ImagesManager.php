@@ -8,6 +8,21 @@ class ImagesManager
         $this->setBdd($bdd);
     }
 
+    public function getImagesById($id)
+    {
+        $id = (int) $id;
+        $query = $this->getBdd()->prepare('SELECT * FROM images WHERE idImages = :id');
+        $query->bindValue('id', $id, PDO::PARAM_INT);
+        $query->execute();
+        $allImages = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        $arrayOfImages = [];
+        foreach ($allImages as $images) {
+            $arrayOfImages[] = new Images($images);
+        }
+        return $arrayOfImages;
+    }
+
     public function addImages(Images $image)
     {
         $query = $this->getBdd()->prepare('INSERT INTO images(link, alt) VALUES(:link, :alt)');
